@@ -1,3 +1,4 @@
+package clases;
 
 public class Actividad {
 	private String descripción, 

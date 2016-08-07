@@ -1,3 +1,4 @@
+package clases;
 
 public class Negocio {
 	private String título, 

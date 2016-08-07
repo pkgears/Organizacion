@@ -1,3 +1,4 @@
+package clases;
 
 public class Organizacion {
 	private String nombre, direccion, telefono;
