@@ -12,6 +12,7 @@ public class Negocio {
 	public Negocio(){
 		
 	}
+	
 
 	public Negocio(String título, String descripción, String nombre_organización, String nombre_persona,
 			String fecha_cierre, String estado, float valor) {
@@ -24,6 +25,7 @@ public class Negocio {
 		this.estado = estado;
 		this.valor = valor;
 	}
+
 
 	public String getTítulo() {
 		return título;
