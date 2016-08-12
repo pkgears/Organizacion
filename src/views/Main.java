@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Main extends JFrame {
 
@@ -37,13 +39,23 @@ public class Main extends JFrame {
 	public Main() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setTitle("Inicio");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JButton btnPersonas = new JButton("Personas");
 		btnPersonas.setBounds(50, 50, 150, 25);
+		btnPersonas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				PersonasView window = new PersonasView();
+				window.setVisible(true);
+				Main.this.dispose();;
+			}
+		});
 		
+
 		JButton btnOrganizaciones = new JButton("Organizaciones");
 		btnOrganizaciones.setBounds(238, 50, 150, 25);
 		
@@ -61,6 +73,12 @@ public class Main extends JFrame {
 		contentPane.add(btnNegocios);
 		contentPane.add(btnActividades);
 		contentPane.add(btnSalir);
+		btnSalir.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				System.exit(0);
+			}
+		});
 	}
 
 }
