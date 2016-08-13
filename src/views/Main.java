@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 
 public class Main extends JFrame {
 
@@ -49,7 +50,13 @@ public class Main extends JFrame {
 		btnPersonas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent event) {
-				PersonasView window = new PersonasView();
+				PersonasView window = null;
+				try {
+					window = new PersonasView();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				window.setVisible(true);
 				Main.this.dispose();;
 			}
