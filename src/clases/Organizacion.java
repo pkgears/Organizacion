@@ -7,7 +7,7 @@ public class Organizacion {
 		
 	}
 	
-	public Organizacion(String nombre , String direccion, String telefono){
+	public Organizacion(String nombre ,String telefono,  String direccion){
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.telefono = telefono;
