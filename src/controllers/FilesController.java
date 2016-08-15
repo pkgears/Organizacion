@@ -202,7 +202,33 @@ public class FilesController {
 		}
 	}
 	
-	public void saveOrganizacionesArrayOnFile(ArrayList<Organizacion> array){
+	public void saveOrganizacionesArrayOnFile(ArrayList<Organizacion> array, DefaultTableModel model){
+		gson = new Gson();
+		array.clear();
+		for (int count_row = 0; count_row < model.getRowCount(); count_row++){
+			Organizacion organizacion = new Organizacion();
+			for( int count_column = 0; count_column< model.getColumnCount(); count_column++ ){
+				if(count_column == 0){
+					organizacion.setNombre(model.getValueAt(count_row, count_column).toString());
+				}
+				else if(count_column == 1){
+					organizacion.setTelefono(model.getValueAt(count_row, count_column).toString());
+				}else if(count_column == 2){
+					organizacion.setDireccion(model.getValueAt(count_row, count_column).toString());
+				}
+			}
+			array.add(organizacion);
+		}
+		try{
+			String json = gson.toJson(array).toString();
+			System.out.println(json);
+			FileWriter fw = new FileWriter(this.getOrganizacionesJson());
+			gson.toJson(array, fw);
+			fw.flush();
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
 	}
 	

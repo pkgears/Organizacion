@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.EventQueue;
+import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -70,6 +71,20 @@ public class Main extends JFrame {
 		
 
 		JButton btnOrganizaciones = new JButton("Organizaciones");
+		btnOrganizaciones.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				OrganizacionesView windowOrganizaciones = null;
+				try{
+					windowOrganizaciones = new OrganizacionesView();
+				}catch( Exception e){
+					e.printStackTrace();
+				}
+				windowOrganizaciones.setVisible(true);
+				Main.this.dispose();
+				
+			}
+		});
 		btnOrganizaciones.setBounds(238, 50, 150, 25);
 		
 		JButton btnNegocios = new JButton("Negocios");
