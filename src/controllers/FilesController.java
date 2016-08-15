@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import javax.swing.table.DefaultTableModel;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -171,6 +173,46 @@ public class FilesController {
 		}	
 	}
 	
+	public void savePersonasArrayOnFile(ArrayList<Persona> array, DefaultTableModel model){
+		gson = new Gson();
+		array.clear();
+		for (int count_row = 0; count_row < model.getRowCount(); count_row++){
+			Persona persona = new Persona();
+			for( int count_column = 0; count_column< model.getColumnCount(); count_column++ ){
+				if(count_column == 0){
+					persona.setNombre(model.getValueAt(count_row, count_column).toString());
+				}
+				else if(count_column == 1){
+					persona.setTelefono(model.getValueAt(count_row, count_column).toString());
+				}else if(count_column == 2){
+					persona.setCorreo(model.getValueAt(count_row, count_column).toString());
+				}
+			}
+			array.add(persona);
+		}
+		try{
+			String json = gson.toJson(array).toString();
+			System.out.println(json);
+			FileWriter fw = new FileWriter(this.getPersonasJson());
+			gson.toJson(array, fw);
+			fw.flush();
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveOrganizacionesArrayOnFile(ArrayList<Organizacion> array){
+		
+	}
+	
+	public void saveNegociosArrayOnFile(ArrayList<Negocio> array){
+		
+	}
+
+	public void saveActividadesArrayOnFile(ArrayList<Actividad> array){
+		
+	}
 	
 	
 	public ArrayList<Persona> getAllPersonas() throws FileNotFoundException{
@@ -180,9 +222,6 @@ public class FilesController {
 			fr = new FileReader(this.getPersonasJson());
 			br = new BufferedReader(fr);
 			arrayPersonas = gson.fromJson(br, PERSONA_TYPE);
-			arrayPersonas.forEach(persona ->{
-				System.out.println(persona.toString());
-			});
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -196,9 +235,6 @@ public class FilesController {
 			fr = new FileReader(this.getOrganizacionesJson());
 			br = new BufferedReader(fr);
 			arrayOrganizaciones = gson.fromJson(br, ORGANIZACION_TYPE);
-			arrayOrganizaciones.forEach(persona ->{
-				System.out.println(persona.toString());
-			});
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -212,9 +248,7 @@ public class FilesController {
 			fr = new FileReader(this.getActividadesJson());
 			br = new BufferedReader(fr);
 			arrayActividades = gson.fromJson(br, ACTIVIDAD_TYPE);
-			arrayActividades.forEach(persona ->{
-				System.out.println(persona.toString());
-			});
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -228,9 +262,6 @@ public class FilesController {
 			fr = new FileReader(this.getNegociosJson());
 			br = new BufferedReader(fr);
 			arrayNegocios = gson.fromJson(br, NEGOCIO_TYPE);
-			arrayNegocios.forEach(persona ->{
-				System.out.println(persona.toString());
-			});
 		}catch(Exception e){
 			e.printStackTrace();
 		}

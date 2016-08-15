@@ -19,6 +19,12 @@ import clases.Persona;
 import controllers.FilesController;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JMenuBar;
+import java.awt.Font;
+import javax.swing.JTextArea;
+import java.awt.Color;
 
 public class PersonasView extends JFrame {
 
@@ -31,7 +37,8 @@ public class PersonasView extends JFrame {
 	private JTextField nombreField;
 	private JTextField telefonoField;
 	private JTextField correoField;
-
+	
+	private ArrayList<Persona> personas;
 	/**
 	 * Launch the application.
 	 */
@@ -57,20 +64,23 @@ public class PersonasView extends JFrame {
 		setTitle("Personas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 545, 373);
+		
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JButton btnBack = new JButton("<-");
-		btnBack.setBounds(12, 303, 49, 25);
+		btnBack.setBounds(22, 280, 49, 25);
 		contentPane.add(btnBack);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(12, 12, 513, 279);
+		tabbedPane.setBounds(12, 12, 513, 256);
 		contentPane.add(tabbedPane);
 		
 		JPanel panel = new JPanel();
+		panel.setForeground(Color.RED);
 		tabbedPane.addTab("Todas", null, panel, null);
 		
 		
@@ -122,8 +132,21 @@ public class PersonasView extends JFrame {
 		correoField.setColumns(10);
 		
 		JButton btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(363, 215, 117, 25);
+		btnAgregar.setBounds(355, 192, 117, 25);
 		panel_1.add(btnAgregar);
+		
+		JTextArea txtrParaModificarDar = new JTextArea();
+		txtrParaModificarDar.setFont(new Font("Dialog", Font.PLAIN, 11));
+		txtrParaModificarDar.setLineWrap(true);
+		txtrParaModificarDar.setEditable(false);
+		txtrParaModificarDar.setWrapStyleWord(true);
+		txtrParaModificarDar.setText("Para modificar dar doble click sobre la celda que desea modifcar, hacer los cambios, presionar enter y luego click sobre el boton \"Guardar Cambios\"");
+		txtrParaModificarDar.setBounds(160, 268, 353, 45);
+		contentPane.add(txtrParaModificarDar);
+		
+		JLabel labelError = new JLabel("");
+		labelError.setBounds(183, 12, 330, 15);
+		contentPane.add(labelError);
 		
 		btnAgregar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -136,14 +159,38 @@ public class PersonasView extends JFrame {
 				try {
 					controller.saveFile(newPersona);
 					model.addRow(new Object[]{newPersona.getNombre(),newPersona.getTelefono(), newPersona.getCorreo() });
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
+				} catch (FileNotFoundException e){
 					e.printStackTrace();
 				}
 			}
 		});
 		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
 		
+		JButton btnGuardar = new JButton("Guardar cambios");
+		menuBar.add(btnGuardar);
+		
+		JButton btnBorrar= new JButton("Borrar reg. selecionado");
+		menuBar.add(btnBorrar);
+		btnBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					model.removeRow(table.getSelectedRow());
+					controller.savePersonasArrayOnFile(personas, model);
+					labelError.setText("");
+				}catch(Exception e){
+					labelError.setText("Para eliminar seleccione un registro");
+				}
+				
+			}
+		});
+		btnGuardar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				controller.savePersonasArrayOnFile(personas, model);
+			}
+		});
 		
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
@@ -156,7 +203,7 @@ public class PersonasView extends JFrame {
 	}
 	
 	public void loadPersonas(DefaultTableModel model) throws FileNotFoundException{
-		ArrayList<Persona> personas = controller.getAllPersonas();
+		personas = controller.getAllPersonas();
 		model.addColumn("Nombre");
 		model.addColumn("Telefono");
 		model.addColumn("Correo");
