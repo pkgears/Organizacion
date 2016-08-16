@@ -59,7 +59,7 @@ public class OrganizacionesView extends JFrame {
 	 * @throws FileNotFoundException 
 	 */
 	public OrganizacionesView() throws FileNotFoundException {
-		setTitle("Personas");
+		setTitle("Organizaciones");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 545, 373);
 		

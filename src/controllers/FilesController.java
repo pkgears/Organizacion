@@ -232,7 +232,7 @@ public class FilesController {
 		
 	}
 	
-	public void saveNegociosArrayOnFile(ArrayList<Negocio> array){
+	public void saveNegociosArrayOnFile(ArrayList<Negocio> array, DefaultTableModel model){
 		
 	}
 

@@ -1,7 +1,6 @@
 package views;
 
 import java.awt.EventQueue;
-import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -88,9 +87,31 @@ public class Main extends JFrame {
 		btnOrganizaciones.setBounds(238, 50, 150, 25);
 		
 		JButton btnNegocios = new JButton("Negocios");
+		btnNegocios.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				NegociosView window = null;
+				try {
+					window = new NegociosView();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				window.setVisible(true);
+				Main.this.dispose();
+			}
+		});
 		btnNegocios.setBounds(50, 124, 150, 25);
 		
 		JButton btnActividades = new JButton("Actividades");
+		btnActividades.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ActividadesView window = new ActividadesView();
+				window.setVisible(true);
+				Main.this.dispose();
+			}
+		});
 		btnActividades.setBounds(238, 124, 150, 25);
 		
 		JButton btnSalir = new JButton("Salir");
