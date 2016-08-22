@@ -27,6 +27,8 @@ import clases.Organizacion;
 import clases.Persona;
 import controllers.FilesController;
 import javax.swing.JComboBox;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class NegociosView extends JFrame {
 
@@ -61,6 +63,11 @@ public class NegociosView extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		
+		JLabel labelError = new JLabel("");
+		labelError.setBounds(183, 12, 330, 15);
+		contentPane.add(labelError);
 		
 		JButton btnBack = new JButton("<-");
 		btnBack.setBounds(22, 280, 49, 25);
@@ -149,6 +156,21 @@ public class NegociosView extends JFrame {
 		panel_1.add(lblValor);
 		
 		textValor = new JTextField();
+		textValor.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				try{
+					Float.parseFloat( textValor.getText() );
+					labelError.setText("");
+					btnAgregar.setEnabled(true);
+				}catch(Exception e){
+					System.out.println("Verifica que el campo valor sea numérico");
+					labelError.setText("Verifica que el campo valor sea numérico");
+					btnAgregar.setEnabled(false);
+				}
+			}
+		});
+		
 		textValor.setBounds(441, 67, 114, 19);
 		panel_1.add(textValor);
 		textValor.setColumns(10);
@@ -163,6 +185,7 @@ public class NegociosView extends JFrame {
 		textStatus.setColumns(10);
 		
 		
+		
 		JTextArea txtInstrucciones = new JTextArea();
 		txtInstrucciones.setFont(new Font("Dialog", Font.PLAIN, 11));
 		txtInstrucciones.setLineWrap(true);
@@ -172,9 +195,6 @@ public class NegociosView extends JFrame {
 		txtInstrucciones.setBounds(160, 286, 459, 45);
 		contentPane.add(txtInstrucciones);
 		
-		JLabel labelError = new JLabel("");
-		labelError.setBounds(183, 12, 330, 15);
-		contentPane.add(labelError);
 		
 		btnAgregar.addMouseListener(new MouseAdapter() {
 			@Override
