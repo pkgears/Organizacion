@@ -43,6 +43,7 @@ public class NegociosView extends JFrame {
 	private JTextField textTitulo;
 	private JTextField textFecha;
 	private JTextField textValor;
+	private JTextField textStatus;
 
 	/**
 	 * Create the frame.
@@ -102,7 +103,7 @@ public class NegociosView extends JFrame {
 		panel_1.add(lblTitulo);
 		
 		textTitulo = new JTextField();
-		textTitulo.setBounds(90, 41, 175, 19);
+		textTitulo.setBounds(90, 41, 155, 19);
 		panel_1.add(textTitulo);
 		textTitulo.setColumns(10);
 		
@@ -112,45 +113,54 @@ public class NegociosView extends JFrame {
 		
 		JTextArea textDescripcion = new JTextArea();
 		textDescripcion.setLineWrap(true);
-		textDescripcion.setBounds(12, 113, 253, 46);
+		textDescripcion.setBounds(12, 113, 233, 46);
 		panel_1.add(textDescripcion);
 		
 		JLabel lblFechaDeCierre = new JLabel("Fecha de cierre");
-		lblFechaDeCierre.setBounds(12, 171, 120, 15);
+		lblFechaDeCierre.setBounds(12, 192, 120, 15);
 		panel_1.add(lblFechaDeCierre);
 		
 		textFecha = new JTextField();
 		textFecha.setText("");
-		textFecha.setBounds(134, 171, 131, 19);
+		textFecha.setBounds(134, 192, 111, 19);
 		panel_1.add(textFecha);
 		textFecha.setColumns(10);
 		
 		JLabel lblEmpresa = new JLabel("Empresa");
-		lblEmpresa.setBounds(296, 39, 70, 15);
+		lblEmpresa.setBounds(260, 43, 70, 15);
 		panel_1.add(lblEmpresa);
 		
 		JLabel lblPersona = new JLabel("Persona");
-		lblPersona.setBounds(296, 102, 70, 15);
+		lblPersona.setBounds(263, 113, 70, 15);
 		panel_1.add(lblPersona);
 		
 		JComboBox<String> comboEmpresa = new JComboBox<String>();
-		comboEmpresa.setBounds(306, 66, 155, 24);
+		comboEmpresa.setBounds(260, 64, 155, 24);
 		panel_1.add(comboEmpresa);
 		fillComboEmpresa(organizaciones, comboEmpresa);
 		
 		JComboBox<String> comboPersona = new JComboBox<String>();
-		comboPersona.setBounds(306, 122, 155, 24);
+		comboPersona.setBounds(260, 135, 155, 24);
 		panel_1.add(comboPersona);
 		fillComboPersona(personas, comboPersona);
 		
 		JLabel lblValor = new JLabel("Valor");
-		lblValor.setBounds(296, 171, 70, 15);
+		lblValor.setBounds(431, 43, 70, 15);
 		panel_1.add(lblValor);
 		
 		textValor = new JTextField();
-		textValor.setBounds(346, 169, 114, 19);
+		textValor.setBounds(441, 67, 114, 19);
 		panel_1.add(textValor);
 		textValor.setColumns(10);
+		
+		JLabel lblEstado = new JLabel("Estado");
+		lblEstado.setBounds(431, 113, 70, 15);
+		panel_1.add(lblEstado);
+		
+		textStatus = new JTextField();
+		textStatus.setBounds(441, 138, 114, 19);
+		panel_1.add(textStatus);
+		textStatus.setColumns(10);
 		
 		
 		JTextArea txtInstrucciones = new JTextArea();
@@ -174,7 +184,9 @@ public class NegociosView extends JFrame {
 				newNegocio.setDescripción(textDescripcion.getText());
 				newNegocio.setFechaCierre(textFecha.getText());
 				newNegocio.setNombreOrganización(comboEmpresa.getSelectedItem().toString() );
-				newNegocio.setNombreOrganización(comboPersona.getSelectedItem().toString() );
+				newNegocio.setNombrePersona(comboPersona.getSelectedItem().toString() );
+				newNegocio.setEstado(textStatus.getText());
+				newNegocio.setValor( Float.parseFloat( textValor.getText() ) );
 				try {
 					controller.saveFile(newNegocio);
 					model.addRow(new Object[]{
@@ -238,6 +250,18 @@ public class NegociosView extends JFrame {
 		model.addColumn("Nombre persona");
 		model.addColumn("Valor");
 		model.addColumn("Estado");
+		negocios = controller.getAllNegocios();
+		negocios.forEach(element ->{
+			model.addRow(new Object[]{
+				element.getTítulo(),
+				element.getDescripción(),
+				element.getFechaCierre(),
+				element.getNombreOrganización(),
+				element.getNombrePersona(),
+				element.getValor(),
+				element.getEstado()
+			});
+		});
 	}
 	
 	public void fillComboPersona(ArrayList<Persona> array, JComboBox<String> combo ){
@@ -251,5 +275,4 @@ public class NegociosView extends JFrame {
 			combo.addItem( element.getNombre() );
 		});
 	}
-
 }

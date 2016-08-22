@@ -225,7 +225,6 @@ public class FilesController {
 			FileWriter fw = new FileWriter(this.getOrganizacionesJson());
 			gson.toJson(array, fw);
 			fw.flush();
-
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -233,7 +232,39 @@ public class FilesController {
 	}
 	
 	public void saveNegociosArrayOnFile(ArrayList<Negocio> array, DefaultTableModel model){
-		
+		gson = new Gson();
+		array.clear();
+		for (int count_row = 0; count_row < model.getRowCount(); count_row++){
+			Negocio negocio = new Negocio();
+			for( int count_column = 0; count_column< model.getColumnCount(); count_column++ ){
+				if(count_column == 0){
+					negocio.setTítulo(model.getValueAt(count_row, count_column).toString());
+				}
+				else if(count_column == 1){
+					negocio.setDescripción(model.getValueAt(count_row, count_column).toString());
+				}else if(count_column == 2){
+					negocio.setFechaCierre(model.getValueAt(count_row, count_column).toString());
+				}else if(count_column == 3){
+					negocio.setNombreOrganización(model.getValueAt(count_row, count_column).toString());
+				}else if(count_column == 4){
+					negocio.setNombrePersona(model.getValueAt(count_row, count_column).toString());
+				}else if(count_column == 5){
+					negocio.setValor( Float.parseFloat( model.getValueAt(count_row, count_column).toString() ) );
+				}else if(count_column == 6){
+					negocio.setEstado(model.getValueAt(count_row, count_column).toString());
+				}
+			}
+			array.add(negocio);
+		}
+		try{
+			String json = gson.toJson(array).toString();
+			System.out.println(json);
+			FileWriter fw = new FileWriter(this.getNegociosJson());
+			gson.toJson(array, fw);
+			fw.flush();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public void saveActividadesArrayOnFile(ArrayList<Actividad> array){
