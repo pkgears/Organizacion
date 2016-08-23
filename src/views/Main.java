@@ -107,7 +107,13 @@ public class Main extends JFrame {
 		btnActividades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ActividadesView window = new ActividadesView();
+				ActividadesView window = null;
+				try {
+					window = new ActividadesView();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				window.setVisible(true);
 				Main.this.dispose();
 			}

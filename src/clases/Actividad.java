@@ -1,38 +1,38 @@
 package clases;
 
 public class Actividad {
-	private String descripción, 
+	private String descripcion, 
 					tipo, 
 					fecha, 
 					hora, 
 					duración, 
 					nombre_persona, 
-					nombre_organización,
+					nombre_organizacion,
 					nombre_negocio;
 	
 	public Actividad(){
 		
 	}
 
-	public Actividad(String descripción, String tipo, String fecha, String hora, String duración, String nombre_persona,
-			String nombre_organización, String nombre_negocio) {
+	public Actividad(String descripcion, String tipo, String fecha, String hora, String duración, String nombre_persona,
+			String nombre_organizacion, String nombre_negocio) {
 		super();
-		this.descripción = descripción;
+		this.descripcion = descripcion;
 		this.tipo = tipo;
 		this.fecha = fecha;
 		this.hora = hora;
 		this.duración = duración;
 		this.nombre_persona = nombre_persona;
-		this.nombre_organización = nombre_organización;
+		this.nombre_organizacion = nombre_organizacion;
 		this.nombre_negocio = nombre_negocio;
 	}
 
-	public String getDescripción() {
-		return descripción;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
 	public void setDescripción(String descripción) {
-		this.descripción = descripción;
+		this.descripcion = descripción;
 	}
 
 	public String getTipo() {
@@ -59,11 +59,11 @@ public class Actividad {
 		this.hora = hora;
 	}
 
-	public String getDuración() {
+	public String getDuracion() {
 		return duración;
 	}
 
-	public void setDuración(String duración) {
+	public void setDuracion(String duración) {
 		this.duración = duración;
 	}
 
@@ -75,12 +75,12 @@ public class Actividad {
 		this.nombre_persona = nombre_persona;
 	}
 
-	public String getNombreOrganización() {
-		return nombre_organización;
+	public String getNombreOrganizacion() {
+		return nombre_organizacion;
 	}
 
-	public void setNombreOrganización(String nombre_organización) {
-		this.nombre_organización = nombre_organización;
+	public void setNombreOrganizacion(String nombre_organizacion) {
+		this.nombre_organizacion = nombre_organizacion;
 	}
 
 	public String getNombreNegocio() {

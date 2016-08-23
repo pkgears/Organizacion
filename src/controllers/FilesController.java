@@ -267,8 +267,42 @@ public class FilesController {
 		}
 	}
 
-	public void saveActividadesArrayOnFile(ArrayList<Actividad> array){
-		
+	public void saveActividadesArrayOnFile(ArrayList<Actividad> array, DefaultTableModel model){
+		gson = new Gson();
+		array.clear();
+		for (int count_row = 0; count_row < model.getRowCount(); count_row++){
+			Actividad actividad = new Actividad();
+			for( int count_column = 0; count_column< model.getColumnCount(); count_column++ ){
+				if(count_column == 0){
+					actividad.setTipo(model.getValueAt(count_row, count_column).toString());
+				}
+				else if(count_column == 1){
+					actividad.setDescripción(model.getValueAt(count_row, count_column).toString());
+				}else if(count_column == 2){
+					actividad.setFecha(model.getValueAt(count_row, count_column).toString());
+				}else if(count_column == 3){
+					actividad.setHora(model.getValueAt(count_row, count_column).toString());
+				}else if(count_column == 4){
+					actividad.setDuracion(model.getValueAt(count_row, count_column).toString());
+				}else if(count_column == 5){
+					actividad.setNombreOrganizacion( model.getValueAt(count_row, count_column).toString() );
+				}else if(count_column == 6){
+					actividad.setNombrePersona(model.getValueAt(count_row, count_column).toString());
+				}else if(count_column == 7 ){
+					actividad.setNombreNegocio(model.getValueAt(count_row, count_column).toString());
+				}
+			}
+			array.add(actividad);
+		}
+		try{
+			String json = gson.toJson(array).toString();
+			System.out.println(json);
+			FileWriter fw = new FileWriter(this.getActividadesJson());
+			gson.toJson(array, fw);
+			fw.flush();
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 	}
 	
 	
